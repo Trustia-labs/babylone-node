@@ -1,6 +1,6 @@
 # Babylon Node Docker Setup
 
-This project contains the setup for running a Babylon Node within a Docker container. It includes the Dockerfile for building the image and the docker-compose.yml for easy setup and management.
+This project contains the setup for running a Babylon Node within a Ubuntu Docker container. It includes the Dockerfile for building the image and the docker-compose.yml for easy setup and management.
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@ This project contains the setup for running a Babylon Node within a Docker conta
 Clone this repository to your local machine to get started.
 
 ```bash
-git clone <repository_url>
-cd <repository_directory>
+git clone https://github.com/Trustia-labs/babylone-node.git
+cd babylone-node
 ```
 ### Step 2: Build and Run the Container
 Navigate to the project directory and use Docker Compose to build and start the Babylon Node.
