@@ -51,8 +51,7 @@ docker exec -it babylon-node /bin/bash
 # Creating a Wallet and register your node
 ## Check Node Synchronization
 Before creating your wallet, ensure the node is fully synchronized with the network.
-```
-bash
+```bash
 babylond status | jq '.sync_info.catching_up'
 ```
 
