@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  babylon-node:
+    build:
+      context: ./docker
+      # Assuming your Dockerfile is located in the "docker" directory
+    container_name: babylon-node
+    volumes:
+      - babylon_data:/root/.babylond
+      # This volume ensures that your node data is persistent
+    restart: always
+    environment:
+      - DAEMON_NAME=babylond
+      - DAEMON_HOME=/root/.babylond
+      - DAEMON_RESTART_AFTER_UPGRADE=true
+      - DAEMON_ALLOW_DOWNLOAD_BINARIES=false
+    # Ports can be added if your node needs to communicate with external networks
+    #ports:
+    #  - "external_port:internal_port"
+    tty: true
+    command: ["cosmovisor", "run", "start", "--x-crisis-skip-assert-invariants"]
+    # Overrides the CMD defined in the Dockerfile, directly starting Cosmovisor
+
+volumes:
+  babylon_data:
+  # Defines a volume for persistent data storage
+
