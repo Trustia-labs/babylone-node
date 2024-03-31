@@ -43,7 +43,6 @@ Accessing the Container
 Enter the container using the following command:
 
 ```bash
-Copy code
 docker exec -it babylon-node /bin/bash
 ```
 `
