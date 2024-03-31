@@ -22,7 +22,6 @@ cd babylone-node
 Navigate to the project directory and use Docker Compose to build and start the Babylon Node.
 
 ```bash
-Copy code
 docker-compose up -d --build
 ```
 This command builds the Docker image if it hasn't been built and starts the container in detached mode.
