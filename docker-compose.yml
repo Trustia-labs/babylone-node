@@ -3,7 +3,7 @@ version: '3.8'
 services:
   babylon-node:
     build:
-      context: ./docker
+      context: .
       # Assuming your Dockerfile is located in the "docker" directory
     container_name: babylon-node
     volumes:
