@@ -3,6 +3,7 @@ FROM ubuntu:latest
 
 # Avoid prompts from apt during installation
 ENV DEBIAN_FRONTEND=noninteractive
+ARG NODE_NAME
 
 # Update the system and install essential components
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
@@ -11,13 +12,10 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     build-essential \
     curl \
     jq \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get install systemd
-RUN  apt-get install nano
-
-# Install Go
-RUN wget https://golang.org/dl/go1.21.4.linux-amd64.tar.gz \
+    systemd \
+    nano \
+    && rm -rf /var/lib/apt/lists/* \
+    && wget https://golang.org/dl/go1.21.4.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz \
     && rm go1.21.4.linux-amd64.tar.gz
 
@@ -45,7 +43,7 @@ RUN babylond --help
 
 # Initialisation of the node
 RUN mkdir -p /root/.babylond \
-    && babylond init trustia_node --chain-id bbn-test-3 \
+    && babylond init ${NODE_NAME?nodenamenotset} --chain-id bbn-test-3 \
     # Download the genesis file
     && wget https://github.com/babylonchain/networks/raw/main/bbn-test-3/genesis.tar.bz2 \
     # Extract genesis.json and clean up
