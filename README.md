@@ -88,7 +88,7 @@ sed -i 's/^timeout_commit\s*=.*/timeout_commit = "30s"/' ~/.babylond/config/conf
 ```
 
 ## Registering the Node
-Before registering your node, ensure you have at least 1 $BBN in your wallet. You can find some instructions [here](https://www.binance.com/en-ZA/square/post/4606771072186)
+Before registering your node, ensure you have at least 1 $BBN in your wallet. You can find some instructions [here](https://www.binance.com/en-ZA/square/post/4606771072186). Be patient, the faucet can take sometimes 3 to 6 hours to deliver when crowded.
 
 - Check Wallet Balance : Visit Babylon Explorers and enter your wallet address to verify your balance. Alternatively, you can go directly to [https://testnet.babylon.explorers.guru/account/<YOUR_ADDRESS>](https://testnet.babylon.explorers.guru/account/bbn186m9t6ctz2z0f507yf63406cufl4e0ftgkndvx)
 - Create Validator Profile : Create your validator profile in .babylond/config/validator.json. Replace placeholders with your information.
@@ -117,7 +117,7 @@ The content should be as follows (replace the placeholders):
 - The moniker is your chosen nickname
 
 ## Register Node as Validator
-Run the following command, replacing placeholders as necessary:
+Run the following command:
 ```bash
 babylond tx checkpointing create-validator .babylond/config/validator.json --chain-id="bbn-test-3" --gas="auto" --gas-adjustment="1.5" --gas-prices="0.025ubbn" --from=wallet
 ```
