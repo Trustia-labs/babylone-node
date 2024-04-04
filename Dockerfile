@@ -3,6 +3,7 @@ FROM ubuntu:latest
 
 # Avoid prompts from apt during installation
 ENV DEBIAN_FRONTEND=noninteractive
+ARG NODE_NAME
 
 # Update the system and install essential components
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
@@ -42,7 +43,7 @@ RUN babylond --help
 
 # Initialisation of the node
 RUN mkdir -p /root/.babylond \
-    && babylond init livio_node --chain-id bbn-test-3 \
+    && babylond init ${NODE_NAME?nodenamenotset} --chain-id bbn-test-3 \
     # Download the genesis file
     && wget https://github.com/babylonchain/networks/raw/main/bbn-test-3/genesis.tar.bz2 \
     # Extract genesis.json and clean up

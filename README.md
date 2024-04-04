@@ -1,16 +1,17 @@
 # Babylon Node Docker Setup
 
-This project contains the setup for running a Babylon Node within a Ubuntu Docker container. It includes the Dockerfile for building the image and the docker-compose.yml for easy setup and management. This project is based on the excellent article from BreizhNode (https://medium.com/@breizh-node/babylon-lancez-votre-n%C5%93ud-validateur-en-quelques-%C3%A9tapes-simples-fr-en-deb8084d2b22). 
+This project contains the setup for running a Babylon Node within a Ubuntu Docker container. It includes the Dockerfile for building the image and the docker-compose.yml for easy setup and management. This project is based on the excellent article from [BreizhNode](https://medium.com/@breizh-node/babylon-lancez-votre-n%C5%93ud-validateur-en-quelques-%C3%A9tapes-simples-fr-en-deb8084d2b22). 
 
 ## Prerequisites
 
 - Docker
 - Docker Compose
-- An internet connection for downloading dependencies
+- A good internet connection for downloading dependencies
+- Consequent amount of space on your hard drive / SSD (dozen of GB)
 
 ## Getting Started
 
-### Step 1: Clone the Repository
+### Step 1: Clone the Repository and setup env
 
 Clone this repository to your local machine to get started.
 
@@ -18,8 +19,16 @@ Clone this repository to your local machine to get started.
 git clone https://github.com/Trustia-labs/babylone-node.git
 cd babylone-node
 ```
+
+Duplicate the `.env.example` file and customize the `NODE_NAME` env variable for your node name.
+
+```bash
+cp .env.example .env
+nano .env
+```
+
 ### Step 2: Build and Run the Container
-Navigate to the project directory and use Docker Compose to build and start the Babylon Node.
+In the project directory, use Docker Compose to build and start the Babylon Node.
 
 ```bash
 docker-compose up -d --build
@@ -45,7 +54,7 @@ Enter the container using the following command:
 ```bash
 docker exec -it babylon-node /bin/bash
 ```
-`
+
 # Creating a Wallet and register your node
 ## Check Node Synchronization
 Before creating your wallet, ensure the node is fully synchronized with the network.
@@ -68,7 +77,7 @@ Link Wallet
 Replace <WALLET> with your wallet's address to link it.
 
 ```bash
-babylond create-bls-key <WALLET>
+babylond create-bls-key <WALLET_ADDRESS>
 ```
 
 ### Configure config.toml
@@ -79,10 +88,17 @@ sed -i 's/^timeout_commit\s*=.*/timeout_commit = "30s"/' ~/.babylond/config/conf
 ```
 
 ## Registering the Node
-Before registering your node, ensure you have at least 1 $BBN in your wallet.
+Before registering your node, ensure you have at least 1 $BBN in your wallet. You can find some instructions [here](https://www.binance.com/en-ZA/square/post/4606771072186)
 
-- Check Wallet Balance : Visit BabylonScan and enter your wallet address to verify your balance.
+- Check Wallet Balance : Visit Babylon Explorers and enter your wallet address to verify your balance. Alternatively, you can go directly to [https://testnet.babylon.explorers.guru/account/<YOUR_ADDRESS>](https://testnet.babylon.explorers.guru/account/bbn186m9t6ctz2z0f507yf63406cufl4e0ftgkndvx)
 - Create Validator Profile : Create your validator profile in .babylond/config/validator.json. Replace placeholders with your information.
+
+```bash
+ cd .babylond/config
+ touch validator.json
+ nano validator.json
+```
+The content should be as follows (replace the placeholders):
 
 ```json
 {
@@ -97,6 +113,8 @@ Before registering your node, ensure you have at least 1 $BBN in your wallet.
 "min-self-delegation": "1"
 }
 ```
+- The `PUBLIC_KEY` comes from your previously generated wallet
+- The moniker is your chosen nickname
 
 ## Register Node as Validator
 Run the following command, replacing placeholders as necessary:
@@ -112,6 +130,6 @@ babylond tx checkpointing create-validator .babylond/config/validator.json --cha
 We're constantly working on improving Babylon Node Docker Setup and adding new features based on community feedback. Here's how you can stay connected and support our project:
 
  - Star this Repository: If you find this project useful, please consider starring it by clicking the ⭐ button at the top. It helps more people discover our work!
-- Follow  https://github.com/orgs/Trustia-labs : For updates on this project and others, follow @Trustia-labs on GitHub.
+- Follow https://github.com/orgs/Trustia-labs : For updates on this project and others, follow [@Trustia-labs](https://github.com/Trustia-labs) on GitHub.
 
 Your support and contributions make this project better every day. Thank you for being a part of our community!

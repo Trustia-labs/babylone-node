@@ -4,7 +4,9 @@ services:
   babylon-node:
     build:
       context: .
-      # Assuming your Dockerfile is located in the "docker" directory
+      # Assuming your Dockerfile is located in the "root" directory
+      args:
+        - NODE_NAME=$NODE_NAME
     container_name: babylon-node
     volumes:
       - babylon_data:/root/.babylond
@@ -15,11 +17,13 @@ services:
       - DAEMON_HOME=/root/.babylond
       - DAEMON_RESTART_AFTER_UPGRADE=true
       - DAEMON_ALLOW_DOWNLOAD_BINARIES=false
+    env_file:
+      - .env
     # Ports can be added if your node needs to communicate with external networks
     #ports:
     #  - "external_port:internal_port"
     tty: true
-    command: ["cosmovisor", "run", "start", "--x-crisis-skip-assert-invariants"]
+    command: [ "cosmovisor", "run", "start", "--x-crisis-skip-assert-invariants" ]
     # Overrides the CMD defined in the Dockerfile, directly starting Cosmovisor
 
 volumes:
