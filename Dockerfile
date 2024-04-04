@@ -11,13 +11,10 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     build-essential \
     curl \
     jq \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get install systemd
-RUN  apt-get install nano
-
-# Install Go
-RUN wget https://golang.org/dl/go1.21.4.linux-amd64.tar.gz \
+    systemd \
+    nano \
+    && rm -rf /var/lib/apt/lists/* \
+    && wget https://golang.org/dl/go1.21.4.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz \
     && rm go1.21.4.linux-amd64.tar.gz
 
