@@ -1,23 +1,25 @@
 # Use the latest Ubuntu image as the base
-FROM ubuntu:latest
+FROM  ubuntu:latest
 
 # Avoid prompts from apt during installation
 ENV DEBIAN_FRONTEND=noninteractive
+ENV CGO_ENABLED=1
+ENV GOOS=linux
+ENV GOARCH=amd64
 ARG NODE_NAME
+RUN apt-get update && apt-get install -y
 
 # Update the system and install essential components
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    wget \
-    git \
-    build-essential \
-    curl \
-    jq \
-    systemd \
-    nano \
-    && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get install -y wget curl git nano jq build-essential g++-x86-64-linux-gnu libc6-dev-amd64-cross
+
+
+RUN rm -rf /var/lib/apt/lists/* \
     && wget https://golang.org/dl/go1.21.4.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz \
-    && rm go1.21.4.linux-amd64.tar.gz
+    && rm go1.21.4.linux-amd64.tar.gz \
+    && dpkg --add-architecture amd64
+
+
 
 # Set the Go path
 ENV PATH=$PATH:/usr/local/go/bin
@@ -32,8 +34,8 @@ COPY . /app
 # Clone the Babylon repository
 RUN git clone https://github.com/babylonchain/babylon.git \
     && cd babylon \
-    && git checkout v0.8.4 \
-    && make build \
+    && git checkout v0.8.5 \
+    && make build . \
     # Copy babylond to /usr/local/bin to make it globally accessible
     && cp ./build/babylond /usr/local/bin
 
